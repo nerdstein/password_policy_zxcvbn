@@ -44,8 +44,17 @@ class Zxcvbn extends PasswordConstraintBase {
 		$zxcvbn = new \Drupal\password_policy_zxcvbn\Zxcvbn();
 		$strength = $zxcvbn->passwordStrength('password', $userData);
 
+		$policy = db_select('password_policy_zxcvbn_policies', 'p')
+			->fields('p')
+			->condition('pid', $policy_id)
+			->execute()
+			->fetchObject();
+
 		//TODO - check this against the policy
-		echo $strength['score'];
+		if($strength['score'] < $policy->score ){
+			return FALSE;
+		}
+		return TRUE;
 	}
 
 	/**
@@ -55,13 +64,13 @@ class Zxcvbn extends PasswordConstraintBase {
 	 *   List of policies.
 	 */
 	function getPolicies() {
-		$policy = db_select('password_policy_length_policies', 'p')
+		$policy = db_select('password_policy_zxcvbn_policies', 'p')
 			->fields('p');
 
 		$policies = $policy->execute()->fetchAll();
 		$array = array();
 		foreach($policies as $policy){
-			$array[$policy->pid] = 'Minimum character length ' . $policy->character_length;
+			$array[$policy->pid] = 'Zxcvbn score greater than ' . $policy->score;
 		}
 		return $array;
 	}

@@ -2,12 +2,24 @@
 
 /**
  * @file
- * Contains Drupal\password_policy_zxcvbn\Matchers\RepeatMatch.
+ * Contains Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\RepeatMatch.
  */
 
-namespace Drupal\password_policy_zxcvbn\Matchers;
+namespace Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher;
 
-class RepeatMatch extends Match
+use Drupal\password_policy_zxcvbn\MatchBase;
+
+/**
+ * Matches keyboard locality patterns of characters used in passwords.
+ *
+ * @ZxcvbnMatcher(
+ *   id = "password_policy_zxcvbn_repeat_match",
+ *   title = @Translation("Matching the use of three or more of the same character in passwords"),
+ *   description = @Translation("Identifies the same character used three or more times within passwords"),
+ * )
+ */
+
+class RepeatMatch extends MatchBase
 {
 
     /**

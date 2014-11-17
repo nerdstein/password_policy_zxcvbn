@@ -2,12 +2,24 @@
 
 /**
  * @file
- * Contains Drupal\password_policy_zxcvbn\Matchers\DateMatch.
+ * Contains Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\DateMatch.
  */
 
-namespace Drupal\password_policy_zxcvbn\Matchers;
+namespace Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher;
 
-class DateMatch extends Match
+use Drupal\password_policy_zxcvbn\MatchBase;
+
+/**
+ * Matches the use of dates in passwords.
+ *
+ * @ZxcvbnMatcher(
+ *   id = "password_policy_zxcvbn_date_match",
+ *   title = @Translation("Matching the use of dates in passwords"),
+ *   description = @Translation("Identifies date patterns used within passwords"),
+ * )
+ */
+
+class DateMatch extends MatchBase
 {
 
     const NUM_YEARS = 119; // Years match against 1900 - 2019

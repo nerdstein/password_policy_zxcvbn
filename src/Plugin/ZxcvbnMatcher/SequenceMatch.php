@@ -2,12 +2,24 @@
 
 /**
  * @file
- * Contains Drupal\password_policy_zxcvbn\Matchers\SequenceMatch.
+	* Contains Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\SequenceMatch.
  */
 
-namespace Drupal\password_policy_zxcvbn\Matchers;
+namespace Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher;
 
-class SequenceMatch extends Match
+use Drupal\password_policy_zxcvbn\MatchBase;
+
+/**
+ * Matches alphanumerical sequences of characters used in passwords.
+ *
+ * @ZxcvbnMatcher(
+ *   id = "password_policy_zxcvbn_sequence_match",
+ *   title = @Translation("Matching alphanumerical sequences of characters in passwords"),
+ *   description = @Translation("Identifies alphanumeric sequences of characters used within passwords"),
+ * )
+ */
+
+class SequenceMatch extends MatchBase
 {
 
     const LOWER = 'abcdefghijklmnopqrstuvwxyz';

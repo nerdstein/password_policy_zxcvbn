@@ -2,12 +2,13 @@
 
 /**
  * @file
- * Contains Drupal\password_policy_zxcvbn\Matchers\Match.
+ * Contains Drupal\password_policy_zxcvbn\MatchBase.
  */
 
-namespace Drupal\password_policy_zxcvbn\Matchers;
+namespace Drupal\password_policy_zxcvbn;
+use Drupal\Component\Plugin\PluginBase;
 
-abstract class Match implements MatchInterface
+class MatchBase extends PluginBase implements ZxcvbnMatcherInterface
 {
 
     /**

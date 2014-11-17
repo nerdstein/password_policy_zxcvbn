@@ -2,12 +2,24 @@
 
 /**
  * @file
- * Contains Drupal\password_policy_zxcvbn\Matchers\YearMatch.
+ * Contains Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\YearMatch.
  */
 
-namespace Drupal\password_policy_zxcvbn\Matchers;
+namespace Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher;
 
-class YearMatch extends Match
+use Drupal\password_policy_zxcvbn\MatchBase;
+
+/**
+ * Matches years used within passwords.
+ *
+ * @ZxcvbnMatcher(
+ *   id = "password_policy_zxcvbn_year_match",
+ *   title = @Translation("Matching years in passwords"),
+ *   description = @Translation("Identifies the use of years within passwords"),
+ * )
+ */
+
+class YearMatch extends MatchBase
 {
 
     const NUM_YEARS = 119;

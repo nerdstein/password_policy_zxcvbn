@@ -7,7 +7,10 @@
 
 namespace Drupal\password_policy_zxcvbn;
 
-use Drupal\password_policy_zxcvbn\Matchers\Bruteforce;
+use Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\Bruteforce;
+
+//TODO - This seems like an awkward way to invoke Bruteforce, what about an interface?
+//TODO - Make this into a plugin and "configure" which searcher to invoke
 
 class Searcher
 {

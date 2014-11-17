@@ -2,12 +2,14 @@
 
 /**
  * @file
- * Contains Drupal\password_policy_zxcvbn\Scorer.
+ * Contains Drupal\password_policy_zxcvbn\Plugin\ZxcvbnScorer\DefaultScorer.
  */
 
-namespace Drupal\password_policy_zxcvbn;
+namespace Drupal\password_policy_zxcvbn\Plugin\ZxcvbnScorer;
 
-class Scorer implements ScorerInterface
+use \Drupal\password_policy_zxcvbn\ZxcvbnScorerInterface;
+
+class DefaultScorer implements ZxcvbnScorerInterface
 {
 
     const SINGLE_GUESS = 0.010; // Lower bound assumption of time to hash based on bcrypt/scrypt/PBKDF2.

@@ -2,12 +2,25 @@
 
 /**
  * @file
- * Contains Drupal\password_policy_zxcvbn\Matchers\DictionaryMatch.
+ * Contains Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\DictionaryMatch.
  */
 
-namespace Drupal\password_policy_zxcvbn\Matchers;
+namespace Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher;
 
-class DictionaryMatch extends Match
+use Drupal\password_policy_zxcvbn\MatchBase;
+
+/**
+ * Matches dictionary words used in passwords.
+ *
+ * @ZxcvbnMatcher(
+ *   id = "password_policy_zxcvbn_dictionary_match",
+ *   title = @Translation("Matching words used in passwords pulled from a dictionary"),
+ *   description = @Translation("Identifies common words used within passwords pulled from a dictionary"),
+ * )
+ */
+
+class DictionaryMatch extends MatchBase
+
 {
 
     /**

@@ -2,14 +2,24 @@
 
 /**
  * @file
- * Contains Drupal\password_policy_zxcvbn\Matchers\Bruteforce.
- *
- * Intentionally not named with Match suffix to prevent autoloading from Matcher.
+ * Contains Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\Bruteforce.
  */
 
-namespace Drupal\password_policy_zxcvbn\Matchers;
+namespace Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher;
 
-class Bruteforce extends Match
+use Drupal\password_policy_zxcvbn\MatchBase;
+
+/**
+ * Recursively checks character segments of the password.
+ *
+ * @ZxcvbnMatcher(
+ *   id = "password_policy_zxcvbn_bruteforce_match",
+ *   title = @Translation("Brute force password entropy checking"),
+ *   description = @Translation("Checking a password for common brute force attempts"),
+ * )
+ */
+
+class Bruteforce extends MatchBase
 {
 
     /**

@@ -2,12 +2,24 @@
 
 /**
  * @file
- * Contains Drupal\password_policy_zxcvbn\Matchers\DigitMatch.
+ * Contains Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\DigitMatch.
  */
 
-namespace Drupal\password_policy_zxcvbn\Matchers;
+namespace Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher;
 
-class DigitMatch extends Match
+use Drupal\password_policy_zxcvbn\MatchBase;
+
+/**
+ * Matches the use of the same three digits of characters used in passwords.
+ *
+ * @ZxcvbnMatcher(
+ *   id = "password_policy_zxcvbn_digit_match",
+ *   title = @Translation("Matching the use of three or more of the same digit in passwords"),
+ *   description = @Translation("Identifies the same three digits used within passwords"),
+ * )
+ */
+
+class DigitMatch extends MatchBase
 {
 
     /**

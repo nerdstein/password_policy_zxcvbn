@@ -1,13 +1,24 @@
 <?php
-
 /**
  * @file
- * Contains Drupal\password_policy_zxcvbn\Matchers\SpatialMatch.
+ * Contains Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\SpatialMatch.
  */
 
-namespace Drupal\password_policy_zxcvbn\Matchers;
+namespace Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher;
 
-class SpatialMatch extends Match
+use Drupal\password_policy_zxcvbn\MatchBase;
+
+/**
+ * Matches keyboard locality patterns of characters used in passwords.
+ *
+ * @ZxcvbnMatcher(
+ *   id = "password_policy_zxcvbn_spatial_match",
+ *   title = @Translation("Matching keyboard character spatial locality in passwords"),
+ *   description = @Translation("Identifies the spacial locality of characters used within passwords with respect to keyboards"),
+ * )
+ */
+
+class SpatialMatch extends MatchBase
 {
 
     /**

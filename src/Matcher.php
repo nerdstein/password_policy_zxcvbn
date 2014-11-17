@@ -7,7 +7,7 @@
 
 namespace Drupal\password_policy_zxcvbn;
 
-use Drupal\password_policy_zxcvbn\Matchers\MatchInterface;
+use Drupal\password_policy_zxcvbn\ZxcvbnMatcherInterface;
 
 class Matcher
 {

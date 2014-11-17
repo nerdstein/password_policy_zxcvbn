@@ -2,12 +2,23 @@
 
 /**
  * @file
- * Contains Drupal\password_policy_zxcvbn\Matchers\L33tMatch.
- * Class L33tMatch extends DictionaryMatch to translate l33t into dictionary words for matching.
+ * Contains Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\L33tMatch.
  */
-namespace Drupal\password_policy_zxcvbn\Matchers;
 
-use Drupal\password_policy_zxcvbn\Matchers\DictionaryMatch;
+namespace Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher;
+
+use Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\DictionaryMatch;
+
+/**
+ * Matches l33t speak words used in passwords.
+ *
+ * @ZxcvbnMatcher(
+ *   id = "password_policy_zxcvbn_l33t_match",
+ *   title = @Translation("Matching l33t speak words used in passwords"),
+ *   description = @Translation("Identifies l33t speak words used within passwords pulled from a dictionary"),
+ * )
+ */
+
 
 class L33tMatch extends DictionaryMatch
 {

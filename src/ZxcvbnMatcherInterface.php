@@ -2,12 +2,12 @@
 
 /**
  * @file
- * Contains Drupal\password_policy_zxcvbn\Matchers\MatchInterface.
+ * Contains Drupal\password_policy_zxcvbn\ZxcvbnMatcherInterface.
  */
 
-namespace Drupal\password_policy_zxcvbn\Matchers;
+namespace Drupal\password_policy_zxcvbn;
 
-interface MatchInterface
+interface ZxcvbnMatcherInterface
 {
 
     /**

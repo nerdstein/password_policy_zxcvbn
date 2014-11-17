@@ -25,6 +25,7 @@ use Drupal\Core\Config\Config;
  *   policy_update_token = "@pid"
  * )
  */
+
 class Zxcvbn extends PasswordConstraintBase {
 
 	/**
@@ -36,13 +37,16 @@ class Zxcvbn extends PasswordConstraintBase {
 	 */
 	function validate($policy_id, $password) {
 		//TODO - get user data from form
+		/*
 		$userData = array(
 			'Marco',
 			'marco@example.com'
 		);
+		$strength = $zxcvbn->passwordStrength($password, $userData);
+		*/
 
 		$zxcvbn = new \Drupal\password_policy_zxcvbn\Zxcvbn();
-		$strength = $zxcvbn->passwordStrength($password, $userData);
+		$strength = $zxcvbn->passwordStrength($password);
 
 		$policy = db_select('password_policy_zxcvbn_policies', 'p')
 			->fields('p')

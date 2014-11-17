@@ -7,7 +7,17 @@
 
 namespace Drupal\password_policy_zxcvbn\Plugin\ZxcvbnScorer;
 
-use \Drupal\password_policy_zxcvbn\ZxcvbnScorerInterface;
+use Drupal\password_policy_zxcvbn\ZxcvbnScorerInterface;
+
+/**
+ * Recursively checks character segments of the password.
+ *
+ * @ZxcvbnScorer(
+ *   id = "password_policy_zxcvbn_default_scorer",
+ *   title = @Translation("Sane defaults for scoring Zxcvbn"),
+ *   description = @Translation("A class for setting up sane defaults for scoring Zxcvbn"),
+ * )
+ */
 
 class DefaultScorer implements ZxcvbnScorerInterface
 {
@@ -57,7 +67,7 @@ class DefaultScorer implements ZxcvbnScorerInterface
      */
     protected function calcCrackTime($entropy)
     {
-        $this->crackTime = (0.5 * pow(2, $entropy)) * (Scorer::SINGLE_GUESS / Scorer::NUM_ATTACKERS);
+        $this->crackTime = (0.5 * pow(2, $entropy)) * ($this::SINGLE_GUESS / $this::NUM_ATTACKERS);
         return $this->crackTime;
     }
 

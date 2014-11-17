@@ -45,16 +45,31 @@ class Matcher
      */
     protected function getMatchers()
     {
+
+			$plugin_manager = \Drupal::service('plugin.manager.password_policy_zxcvbn.zxcvbn_matcher');
+			$all_plugins = $plugin_manager->getDefinitions();
+
+
+
+			$all_matchers = array();
+			foreach($all_plugins as $plugin){
+				$all_matchers[] = $plugin['class'];
+			}
+
+			return $all_matchers;
+
+
+
         //TODO - Put this in a config form
         return array(
-            'Drupal\password_policy_zxcvbn\Matchers\DateMatch',
-            'Drupal\password_policy_zxcvbn\Matchers\DigitMatch',
-            'Drupal\password_policy_zxcvbn\Matchers\RepeatMatch',
-            'Drupal\password_policy_zxcvbn\Matchers\SequenceMatch',
-            'Drupal\password_policy_zxcvbn\Matchers\SpatialMatch',
-            'Drupal\password_policy_zxcvbn\Matchers\YearMatch',
-            'Drupal\password_policy_zxcvbn\Matchers\DictionaryMatch',
-					  'Drupal\password_policy_zxcvbn\Matchers\L33tMatch',
+            'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\DateMatch',
+            'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\DigitMatch',
+            'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\RepeatMatch',
+            'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\SequenceMatch',
+            'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\SpatialMatch',
+            'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\YearMatch',
+            'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\DictionaryMatch',
+					  'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\L33tMatch',
         );
     }
 }

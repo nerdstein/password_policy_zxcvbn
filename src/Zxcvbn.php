@@ -26,7 +26,8 @@ class Zxcvbn
 
     public function __construct()
     {
-        $this->scorer = new Scorer();
+				//TODO - Config form for scorer and searcher, retrieve instances
+        $this->scorer = new \Drupal\password_policy_zxcvbn\Plugin\ZxcvbnScorer\DefaultScorer();
         $this->searcher = new Searcher();
         $this->matcher = new Matcher();
     }

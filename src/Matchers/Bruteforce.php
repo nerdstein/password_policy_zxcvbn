@@ -3,16 +3,12 @@
 /**
  * @file
  * Contains Drupal\password_policy_zxcvbn\Matchers\Bruteforce.
+ *
+ * Intentionally not named with Match suffix to prevent autoloading from Matcher.
  */
 
 namespace Drupal\password_policy_zxcvbn\Matchers;
 
-/**
- * Class Bruteforce
- * @package ZxcvbnPhp\Matchers
- *
- * Intentionally not named with Match suffix to prevent autoloading from Matcher.
- */
 class Bruteforce extends Match
 {
 

@@ -7,7 +7,7 @@
 
 namespace Drupal\password_policy_zxcvbn;
 
-use ZxcvbnPhp\Matchers\MatchInterface;
+use Drupal\password_policy_zxcvbn\Matchers\MatchInterface;
 
 class Matcher
 {
@@ -45,16 +45,16 @@ class Matcher
      */
     protected function getMatchers()
     {
-        // @todo change to dynamic
+        //TODO - Put this in a config form
         return array(
-            'ZxcvbnPhp\Matchers\DateMatch',
-            'ZxcvbnPhp\Matchers\DigitMatch',
-            'ZxcvbnPhp\Matchers\L33tMatch',
-            'ZxcvbnPhp\Matchers\RepeatMatch',
-            'ZxcvbnPhp\Matchers\SequenceMatch',
-            'ZxcvbnPhp\Matchers\SpatialMatch',
-            'ZxcvbnPhp\Matchers\YearMatch',
-            'ZxcvbnPhp\Matchers\DictionaryMatch',
+            'Drupal\password_policy_zxcvbn\Matchers\DateMatch',
+            'Drupal\password_policy_zxcvbn\Matchers\DigitMatch',
+            'Drupal\password_policy_zxcvbn\Matchers\L33tMatch',
+            'Drupal\password_policy_zxcvbn\Matchers\RepeatMatch',
+            'Drupal\password_policy_zxcvbn\Matchers\SequenceMatch',
+            'Drupal\password_policy_zxcvbn\Matchers\SpatialMatch',
+            'Drupal\password_policy_zxcvbn\Matchers\YearMatch',
+            'Drupal\password_policy_zxcvbn\Matchers\DictionaryMatch',
         );
     }
 }

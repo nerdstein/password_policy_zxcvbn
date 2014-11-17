@@ -7,7 +7,7 @@
 
 namespace Drupal\password_policy_zxcvbn;
 
-use ZxcvbnPhp\Matchers\Bruteforce;
+use Drupal\password_policy_zxcvbn\Matchers\Bruteforce;
 
 class Searcher
 {

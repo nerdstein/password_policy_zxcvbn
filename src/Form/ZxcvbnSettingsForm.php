@@ -38,8 +38,9 @@ class ZxcvbnSettingsForm extends FormBase {
 		);
 
 		$form['score'] = array(
-			'#type' => 'textfield',
+			'#type' => 'select',
 			'#title' => t('Minimum Zxcvbn Score'),
+			'#options' => array('0'=>'0','1'=>'1','2'=>'2','3'=>'3','4'=>'4',),
 			'#default_value' => (is_numeric($policy_id))?$policy->score:'',
 		);
 

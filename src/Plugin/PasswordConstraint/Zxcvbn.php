@@ -18,7 +18,7 @@ use Drupal\Core\Config\Config;
  * @PasswordConstraint(
  *   id = "password_policy_zxcvbn_constraint",
  *   title = @Translation("Zxcvbn"),
- *   description = @Translation("Zxcvbn-PHP is a password strength estimator using pattern matching and minimum entropy calculation"),
+ *   description = @Translation("Zxcvbn-PHP is a password strength estimator using pattern matching and minimum entropy calculation. Scores range from 0 to 4, 4 being the strongest password."),
  *   error_message = @Translation("Your password lacks strength and has too many common patterns."),
  *   policy_path = "admin/config/security/password/constraint/zxcvbn",
  *   policy_update_path = "admin/config/security/password/constraint/zxcvbn/@pid",
@@ -42,7 +42,7 @@ class Zxcvbn extends PasswordConstraintBase {
 		);
 
 		$zxcvbn = new \Drupal\password_policy_zxcvbn\Zxcvbn();
-		$strength = $zxcvbn->passwordStrength('password', $userData);
+		$strength = $zxcvbn->passwordStrength($password, $userData);
 
 		$policy = db_select('password_policy_zxcvbn_policies', 'p')
 			->fields('p')

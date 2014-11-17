@@ -7,7 +7,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 
-class PasswordPolicyLengthSettingsForm extends FormBase {
+class ZxcvbnSettingsForm extends FormBase {
 
 
 	/**
@@ -45,7 +45,7 @@ class PasswordPolicyLengthSettingsForm extends FormBase {
 
 		$form['submit'] = array(
 			'#type'=>'submit',
-			'#value'=>'Add Policy',
+			'#value'=> (is_numeric($policy_id))?'Update Policy':'Add Policy',
 		);
 
 		return $form;

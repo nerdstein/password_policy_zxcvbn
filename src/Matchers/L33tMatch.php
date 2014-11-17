@@ -5,6 +5,7 @@
  * Contains Drupal\password_policy_zxcvbn\Matchers\L33tMatch.
  * Class L33tMatch extends DictionaryMatch to translate l33t into dictionary words for matching.
  */
+namespace Drupal\password_policy_zxcvbn\Matchers;
 
 use Drupal\password_policy_zxcvbn\Matchers\DictionaryMatch;
 

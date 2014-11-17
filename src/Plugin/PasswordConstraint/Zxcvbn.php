@@ -50,6 +50,8 @@ class Zxcvbn extends PasswordConstraintBase {
 			->execute()
 			->fetchObject();
 
+		dpm($strength['score']);
+
 		//TODO - check this against the policy
 		if($strength['score'] < $policy->score ){
 			return FALSE;

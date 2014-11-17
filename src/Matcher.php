@@ -49,12 +49,12 @@ class Matcher
         return array(
             'Drupal\password_policy_zxcvbn\Matchers\DateMatch',
             'Drupal\password_policy_zxcvbn\Matchers\DigitMatch',
-            'Drupal\password_policy_zxcvbn\Matchers\L33tMatch',
             'Drupal\password_policy_zxcvbn\Matchers\RepeatMatch',
             'Drupal\password_policy_zxcvbn\Matchers\SequenceMatch',
             'Drupal\password_policy_zxcvbn\Matchers\SpatialMatch',
             'Drupal\password_policy_zxcvbn\Matchers\YearMatch',
             'Drupal\password_policy_zxcvbn\Matchers\DictionaryMatch',
+					  'Drupal\password_policy_zxcvbn\Matchers\L33tMatch',
         );
     }
 }

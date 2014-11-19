@@ -30,8 +30,8 @@ class ZxcvbnSettingsForm extends ConfigFormBase {
 
 		$all_matchers = array();
 		foreach($all_plugins as $plugin){
-			$class = $plugin['class'];
-			$all_matchers[$class] = $plugin['title'];
+			$id = $plugin['id'];
+			$all_matchers[$id] = $plugin['title'];
 		}
 
 		$form['matchers'] = array(
@@ -48,8 +48,8 @@ class ZxcvbnSettingsForm extends ConfigFormBase {
 
 		$all_searchers = array();
 		foreach($all_plugins as $plugin){
-			$class = $plugin['class'];
-			$all_searchers[$class] = $plugin['title'];
+			$id = $plugin['id'];
+			$all_searchers[$id] = $plugin['title'];
 		}
 
 		$form['searcher'] = array(
@@ -57,7 +57,7 @@ class ZxcvbnSettingsForm extends ConfigFormBase {
 			'#type' => 'select',
 			'#options' => $all_searchers,
 			'#default_value' => $config->get('searcher'),
-			//'#required' => TRUE,
+			'#required' => TRUE,
 		);
 
 		//scorer
@@ -66,8 +66,8 @@ class ZxcvbnSettingsForm extends ConfigFormBase {
 
 		$all_scorers = array();
 		foreach($all_plugins as $plugin){
-			$class = $plugin['class'];
-			$all_scorers[$class] = $plugin['title'];
+			$id = $plugin['id'];
+			$all_scorers[$id] = $plugin['title'];
 		}
 
 		$form['scorer'] = array(

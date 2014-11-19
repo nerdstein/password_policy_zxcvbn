@@ -45,17 +45,18 @@ class Matcher
      */
     protected function getMatchers()
     {
-
 			$config = \Drupal::config('password_policy_zxcvbn.settings');
 			$all_matchers = array_values($config->get('matchers'));
+			$enabled_matchers = array();
 
 			for($i=(count($all_matchers)-1); $i>=0; $i--){
-				if(!$all_matchers[$i]){
-					unset($all_matchers[$i]);
+				if($all_matchers[$i]){
+					$def = \Drupal::service('plugin.manager.password_policy_zxcvbn.zxcvbn_matcher')->getDefinition($all_matchers[$i]);
+					$enabled_matchers[] = $def['class'];
 				}
 			}
 
-			return $all_matchers;
+			return $enabled_matchers;
 
     }
 }

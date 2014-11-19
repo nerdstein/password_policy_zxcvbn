@@ -46,14 +46,13 @@ class Matcher
     protected function getMatchers()
     {
 
-			$plugin_manager = \Drupal::service('plugin.manager.password_policy_zxcvbn.zxcvbn_matcher');
-			$all_plugins = $plugin_manager->getDefinitions();
+			$config = \Drupal::config('password_policy_zxcvbn.settings');
+			$all_matchers = array_values($config->get('matchers'));
 
-			//TODO - Put this in a config form
-
-			$all_matchers = array();
-			foreach($all_plugins as $plugin){
-				$all_matchers[] = $plugin['class'];
+			for($i=(count($all_matchers)-1); $i>=0; $i--){
+				if(!$all_matchers[$i]){
+					unset($all_matchers[$i]);
+				}
 			}
 
 			return $all_matchers;

@@ -49,7 +49,7 @@ class Matcher
 			$plugin_manager = \Drupal::service('plugin.manager.password_policy_zxcvbn.zxcvbn_matcher');
 			$all_plugins = $plugin_manager->getDefinitions();
 
-
+			//TODO - Put this in a config form
 
 			$all_matchers = array();
 			foreach($all_plugins as $plugin){
@@ -58,18 +58,5 @@ class Matcher
 
 			return $all_matchers;
 
-
-
-        //TODO - Put this in a config form
-        return array(
-            'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\DateMatch',
-            'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\DigitMatch',
-            'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\RepeatMatch',
-            'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\SequenceMatch',
-            'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\SpatialMatch',
-            'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\YearMatch',
-            'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\DictionaryMatch',
-					  'Drupal\password_policy_zxcvbn\Plugin\ZxcvbnMatcher\L33tMatch',
-        );
     }
 }

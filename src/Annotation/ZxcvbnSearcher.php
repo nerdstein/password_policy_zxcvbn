@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains Drupal\password_policy_zxcvbn\Annotation\ZxcvbnScorer.
+ * Contains Drupal\password_policy_zxcvbn\Annotation\ZxcvbnSearcher.
  */
 
 namespace Drupal\password_policy_zxcvbn\Annotation;
@@ -10,11 +10,11 @@ namespace Drupal\password_policy_zxcvbn\Annotation;
 use Drupal\Component\Annotation\Plugin;
 
 /**
- * Defines a Zxcvbn scorer annotation object.
+ * Defines a Zxcvbn searcher annotation object.
  *
  * @Annotation
  */
-class ZxcvbnScorer extends Plugin {
+class ZxcvbnSearcher extends Plugin {
 
   /**
    * The plugin ID.
@@ -40,7 +40,5 @@ class ZxcvbnScorer extends Plugin {
 	 * @var \Drupal\Core\Annotation\Translation
 	 */
 	public $description;
-
-	//TODO - Add in min and max score, tie this into the form
 
 }

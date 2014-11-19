@@ -3,11 +3,11 @@
 namespace Drupal\password_policy_zxcvbn\Form;
 
 
-use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 
-class ZxcvbnSettingsForm extends FormBase {
+class ZxcvbnSettingsForm extends ConfigFormBase {
 
 
 	/**
@@ -21,63 +21,75 @@ class ZxcvbnSettingsForm extends FormBase {
 	 * {@inheritdoc}
 	 */
 	public function buildForm(array $form, FormStateInterface $form_state) {
+		$config = $this->config('password_policy_zxcvbn.settings');
 		$form = array();
 
-		//get policy
-		$policy_id = '';
-		$path_args = explode('/', current_path());
-		if(count($path_args)==7) {
-			$policy_id = $path_args[6];
-			//load the policy
-			$policy = db_select('password_policy_zxcvbn_policies', 'p')->fields('p')->condition('pid', $policy_id)->execute()->fetchObject();
+		//matchers
+		$plugin_manager = \Drupal::service('plugin.manager.password_policy_zxcvbn.zxcvbn_matcher');
+		$all_plugins = $plugin_manager->getDefinitions();
+
+		$all_matchers = array();
+		foreach($all_plugins as $plugin){
+			$class = $plugin['class'];
+			$all_matchers[$class] = $plugin['title'];
 		}
 
-		$form['pid'] = array(
-			'#type' => 'hidden',
-			'#value' => (is_numeric($policy_id))?$policy_id:'',
+		$form['matchers'] = array(
+			'#title' => 'Matchers',
+			'#type' => 'checkboxes',
+			'#options' => $all_matchers,
+			'#default_value' => $config->get('matchers'),
+			'#required' => TRUE,
 		);
 
-		$form['score'] = array(
+		//searcher
+		$plugin_manager = \Drupal::service('plugin.manager.password_policy_zxcvbn.zxcvbn_searcher');
+		$all_plugins = $plugin_manager->getDefinitions();
+
+		$all_searchers = array();
+		foreach($all_plugins as $plugin){
+			$class = $plugin['class'];
+			$all_searchers[$class] = $plugin['title'];
+		}
+
+		$form['searcher'] = array(
+			'#title' => 'Searcher',
 			'#type' => 'select',
-			'#title' => t('Minimum Zxcvbn Score'),
-			'#options' => array('0'=>'0','1'=>'1','2'=>'2','3'=>'3','4'=>'4',),
-			'#default_value' => (is_numeric($policy_id))?$policy->score:'',
+			'#options' => $all_searchers,
+			'#default_value' => $config->get('searcher'),
+			//'#required' => TRUE,
 		);
 
-		$form['submit'] = array(
-			'#type'=>'submit',
-			'#value'=> (is_numeric($policy_id))?'Update Policy':'Add Policy',
-		);
+		//scorer
+		$plugin_manager = \Drupal::service('plugin.manager.password_policy_zxcvbn.zxcvbn_scorer');
+		$all_plugins = $plugin_manager->getDefinitions();
 
-		return $form;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function validateForm(array &$form, FormStateInterface $form_state) {
-		//TODO - Why is this not loading in the admin config page?
-		if(!is_numeric($form_state->getValue('score')) or $form_state->getValue('score')<0) {
-			$form_state->setErrorByName('score', $this->t('The score must be a positive number.'));
+		$all_scorers = array();
+		foreach($all_plugins as $plugin){
+			$class = $plugin['class'];
+			$all_scorers[$class] = $plugin['title'];
 		}
-		//TODO - Add validation for unique number
+
+		$form['scorer'] = array(
+			'#title' => 'Scorer',
+			'#type' => 'select',
+			'#options' => $all_scorers,
+			'#default_value' => $config->get('scorer'),
+			'#required' => TRUE,
+		);
+
+		return parent::buildForm($form, $form_state);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function submitForm(array &$form, FormStateInterface $form_state) {
-		if($form_state->getValue('pid')) {
-			db_update('password_policy_zxcvbn_policies')
-				->fields(array('score' => $form_state->getValue('score')))
-				->condition('pid', $form_state->getValue('pid'))
-				->execute();
-		} else {
-			db_insert('password_policy_zxcvbn_policies')
-				->fields(array('score'))
-				->values(array('score' => $form_state->getValue('score')))
-				->execute();
-		}
+		$this->config('password_policy_zxcvbn.settings')
+			->set('matchers', $form_state->getValue('matchers'))
+			->set('matchers', $form_state->getValue('matchers'))
+			->save();
 		drupal_set_message('Zxcvbn policy settings have been stored');
+		parent::submitForm($form, $form_state);
 	}
 }

@@ -11,6 +11,7 @@ namespace Drupal\password_policy_zxcvbn\Plugin\PasswordConstraint;
 
 use Drupal\password_policy\PasswordConstraintBase;
 use Drupal\Core\Config\Config;
+use Drupal\password_policy\PasswordPolicyValidation;
 
 /**
  * Enforces a specific character length for passwords.
@@ -54,11 +55,11 @@ class Zxcvbn extends PasswordConstraintBase {
 			->execute()
 			->fetchObject();
 
-		//TODO - check this against the policy
+		$validation = new PasswordPolicyValidation();
 		if($strength['score'] < $policy->score ){
-			return FALSE;
+			$validation->setErrorMessage('The password has a score of '.$strength['score'].' but the policy requires a score of at least '.$policy->score);
 		}
-		return TRUE;
+		return $validation;
 	}
 
 	/**
@@ -77,5 +78,59 @@ class Zxcvbn extends PasswordConstraintBase {
 			$array[$policy->pid] = 'Zxcvbn score greater than ' . $policy->score;
 		}
 		return $array;
+	}
+
+	/**
+	 * Deletes the specific policy.
+	 * @return boolean
+	 */
+	public function deletePolicy($policy_id){
+
+		$result = db_delete('password_policy_zxcvbn_policies')
+			->condition('pid', $policy_id)
+			->execute();
+
+		if($result){
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Check the specific policy exists.
+	 * @return boolean
+	 */
+	public function policyExists($policy_id){
+
+		$result = db_select('password_policy_zxcvbn_policies', 'p')
+			->fields('p')
+			->condition('pid', $policy_id)
+			->execute()
+		  ->fetchAll();
+
+		if(count($result)>0){
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Return the specific policy exists.
+	 * @return string
+	 */
+	public function getPolicy($policy_id){
+
+		$result = db_select('password_policy_zxcvbn_policies', 'p')
+			->fields('p')
+			->condition('pid', $policy_id)
+			->execute()
+		  ->fetchAll();
+
+		if(count($result)>0){
+			$obj = $result[0];
+
+			return 'Zxcvbn score greater than ' . $obj->score;
+		}
+		return FALSE;
 	}
 }

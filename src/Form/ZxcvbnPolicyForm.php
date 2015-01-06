@@ -79,5 +79,6 @@ class ZxcvbnPolicyForm extends FormBase {
 				->execute();
 		}
 		drupal_set_message('Zxcvbn policy settings have been stored');
+		$form_state->setRedirect('password_policy.settings');
 	}
 }

@@ -26,8 +26,8 @@ class ZxcvbnPolicyForm extends FormBase {
 		//get policy
 		$policy_id = '';
 		$path_args = explode('/', current_path());
-		if(count($path_args)==7) {
-			$policy_id = $path_args[6];
+		if(count($path_args)==6) {
+			$policy_id = $path_args[5];
 			//load the policy
 			$policy = db_select('password_policy_zxcvbn_policies', 'p')->fields('p')->condition('pid', $policy_id)->execute()->fetchObject();
 		}
@@ -46,7 +46,7 @@ class ZxcvbnPolicyForm extends FormBase {
 
 		$form['submit'] = array(
 			'#type'=>'submit',
-			'#value'=> (is_numeric($policy_id))?'Update Policy':'Add Policy',
+			'#value'=> (is_numeric($policy_id))?'Update policy':'Add policy',
 		);
 
 		return $form;

@@ -21,8 +21,8 @@ use Drupal\password_policy\PasswordPolicyValidation;
  *   title = @Translation("Zxcvbn"),
  *   description = @Translation("Zxcvbn-PHP is a password strength estimator using pattern matching and minimum entropy calculation. Scores range from 0 to 4, 4 being the strongest password."),
  *   error_message = @Translation("Your password lacks strength and has too many common patterns."),
- *   policy_path = "admin/config/security/password/constraint/zxcvbn",
- *   policy_update_path = "admin/config/security/password/constraint/zxcvbn/@pid",
+ *   policy_path = "admin/config/security/password-policy/zxcvbn",
+ *   policy_update_path = "admin/config/security/password-policy/zxcvbn/@pid",
  *   policy_update_token = "@pid"
  * )
  */
@@ -75,7 +75,7 @@ class Zxcvbn extends PasswordConstraintBase {
 		$policies = $policy->execute()->fetchAll();
 		$array = array();
 		foreach($policies as $policy){
-			$array[$policy->pid] = 'Zxcvbn score greater than ' . $policy->score;
+			$array[$policy->pid] = 'Zxcvbn score greater than or equal to ' . $policy->score;
 		}
 		return $array;
 	}

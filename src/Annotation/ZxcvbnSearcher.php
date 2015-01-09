@@ -32,13 +32,13 @@ class ZxcvbnSearcher extends Plugin {
    */
   public $title;
 
-	/**
-	 * The description shown to users.
-	 *
-	 * @ingroup plugin_translatable
-	 *
-	 * @var \Drupal\Core\Annotation\Translation
-	 */
-	public $description;
+  /**
+   * The description shown to users.
+   *
+   * @ingroup plugin_translatable
+   *
+   * @var \Drupal\Core\Annotation\Translation
+   */
+  public $description;
 
 }

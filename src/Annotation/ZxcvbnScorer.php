@@ -32,15 +32,15 @@ class ZxcvbnScorer extends Plugin {
    */
   public $title;
 
-	/**
-	 * The description shown to users.
-	 *
-	 * @ingroup plugin_translatable
-	 *
-	 * @var \Drupal\Core\Annotation\Translation
-	 */
-	public $description;
+  /**
+   * The description shown to users.
+   *
+   * @ingroup plugin_translatable
+   *
+   * @var \Drupal\Core\Annotation\Translation
+   */
+  public $description;
 
-	//TODO - Add in min and max score, tie this into the form
+  //TODO - Add in min and max score, tie this into the form
 
 }

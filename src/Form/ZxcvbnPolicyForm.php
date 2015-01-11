@@ -25,9 +25,12 @@ class ZxcvbnPolicyForm extends FormBase {
 
     //get policy
     $policy_id = '';
-    $path_args = explode('/', current_path());
-    if (count($path_args) == 6) {
-      $policy_id = $path_args[5];
+    //get current path
+    $url = \Drupal\Core\Url::fromRoute('<current>');
+    $current_path = $url->toString();
+    $path_args = explode('/', $current_path);
+    if (count($path_args) == 7) {
+      $policy_id = $path_args[6];
       //load the policy
       $policy = db_select('password_policy_zxcvbn_policies', 'p')
         ->fields('p')

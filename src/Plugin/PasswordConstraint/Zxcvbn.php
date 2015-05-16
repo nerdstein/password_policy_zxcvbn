@@ -9,8 +9,8 @@
 
 namespace Drupal\password_policy_zxcvbn\Plugin\PasswordConstraint;
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\password_policy\PasswordConstraintBase;
-use Drupal\Core\Config\Config;
 use Drupal\password_policy\PasswordPolicyValidation;
 
 /**
@@ -21,21 +21,14 @@ use Drupal\password_policy\PasswordPolicyValidation;
  *   title = @Translation("Zxcvbn"),
  *   description = @Translation("Zxcvbn-PHP is a password strength estimator using pattern matching and minimum entropy calculation. Scores range from 0 to 4, 4 being the strongest password."),
  *   error_message = @Translation("Your password lacks strength and has too many common patterns."),
- *   policy_path = "admin/config/security/password-policy/zxcvbn",
- *   policy_update_path = "admin/config/security/password-policy/zxcvbn/@pid",
- *   policy_update_token = "@pid"
  * )
  */
 class Zxcvbn extends PasswordConstraintBase {
 
   /**
-   * Returns a true/false status as to if the password meets the requirements of the constraint.
-   * @param password
-   *   The password entered by the end user
-   * @return boolean
-   *   Whether or not the password meets the constraint in the plugin.
+   * {@inheritdoc}
    */
-  function validate($policy_id, $password) {
+  function validate($password) {
     //TODO - get user data from form
     /*
     $userData = array(
@@ -45,91 +38,52 @@ class Zxcvbn extends PasswordConstraintBase {
     $strength = $zxcvbn->passwordStrength($password, $userData);
     */
 
+    $configuration = $this->getConfiguration();
+    $validation = new PasswordPolicyValidation();
+
     $zxcvbn = new \Drupal\password_policy_zxcvbn\Zxcvbn();
     $strength = $zxcvbn->passwordStrength($password);
 
-    $policy = db_select('password_policy_zxcvbn_policies', 'p')
-      ->fields('p')
-      ->condition('pid', $policy_id)
-      ->execute()
-      ->fetchObject();
-
-    $validation = new PasswordPolicyValidation();
-    if ($strength['score'] < $policy->score) {
-      $validation->setErrorMessage('The password has a score of ' . $strength['score'] . ' but the policy requires a score of at least ' . $policy->score);
+    if ($strength['score'] < $configuration['zxcvbn_score']) {
+      $validation->setErrorMessage($this->t('The password has a score of @password-score but the policy requires a score of at least @policy-score', array('@password-score'=>$strength['score'], '@policy-score'=>$configuration['zxcvbn_score'])));
     }
     return $validation;
   }
 
   /**
-   * Returns an array of key value pairs, key is the ID, value is the policy.
-   *
-   * @return array
-   *   List of policies.
+   * {@inheritdoc}
    */
-  function getPolicies() {
-    $policy = db_select('password_policy_zxcvbn_policies', 'p')
-      ->fields('p');
-
-    $policies = $policy->execute()->fetchAll();
-    $array = array();
-    foreach ($policies as $policy) {
-      $array[$policy->pid] = 'Zxcvbn score greater than or equal to ' . $policy->score;
-    }
-    return $array;
+  public function defaultConfiguration() {
+    return [
+      'score' => 3,
+    ];
   }
 
   /**
-   * Deletes the specific policy.
-   * @return boolean
+   * {@inheritdoc}
    */
-  public function deletePolicy($policy_id) {
-
-    $result = db_delete('password_policy_zxcvbn_policies')
-      ->condition('pid', $policy_id)
-      ->execute();
-
-    if ($result) {
-      return TRUE;
-    }
-    return FALSE;
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+    $form['zxcvbn_score'] = array(
+      '#type' => 'select',
+      '#title' => t('Zxcvbn Minimum Score'),
+      '#options' => array('0' => '0', '1' => '1', '2' => '2', '3' => '3', '4' => '4',),
+      '#default_value' => $this->getConfiguration()['zxcvbn_score'],
+    );
+    return $form;
   }
 
   /**
-   * Check the specific policy exists.
-   * @return boolean
+   * {@inheritdoc}
    */
-  public function policyExists($policy_id) {
-
-    $result = db_select('password_policy_zxcvbn_policies', 'p')
-      ->fields('p')
-      ->condition('pid', $policy_id)
-      ->execute()
-      ->fetchAll();
-
-    if (count($result) > 0) {
-      return TRUE;
-    }
-    return FALSE;
+  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
+    $this->configuration['zxcvbn_score'] = $form_state->getValue('zxcvbn_score');
   }
 
   /**
-   * Return the specific policy exists.
-   * @return string
+   * {@inheritdoc}
    */
-  public function getPolicy($policy_id) {
-
-    $result = db_select('password_policy_zxcvbn_policies', 'p')
-      ->fields('p')
-      ->condition('pid', $policy_id)
-      ->execute()
-      ->fetchAll();
-
-    if (count($result) > 0) {
-      $obj = $result[0];
-
-      return 'Zxcvbn score greater than ' . $obj->score;
-    }
-    return FALSE;
+  public function getSummary() {
+    return $this->t('Zxcvbn minimum score of @score', array('@score' => $this->configuration['zxcvbn_score']));
   }
+
 }

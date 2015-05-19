@@ -28,21 +28,16 @@ class Zxcvbn extends PasswordConstraintBase {
   /**
    * {@inheritdoc}
    */
-  function validate($password) {
-    //TODO - get user data from form
-    /*
-    $userData = array(
-      'Marco',
-      'marco@example.com'
-    );
-    $strength = $zxcvbn->passwordStrength($password, $userData);
-    */
+  function validate($password, $user_context) {
+    unset($user_context['uid']);
+
+    $userData = array_values($user_context);
 
     $configuration = $this->getConfiguration();
     $validation = new PasswordPolicyValidation();
 
     $zxcvbn = new \Drupal\password_policy_zxcvbn\Zxcvbn();
-    $strength = $zxcvbn->passwordStrength($password);
+    $strength = $zxcvbn->passwordStrength($password, $userData);
 
     if ($strength['score'] < $configuration['zxcvbn_score']) {
       $validation->setErrorMessage($this->t('The password has a score of @password-score but the policy requires a score of at least @policy-score', array('@password-score'=>$strength['score'], '@policy-score'=>$configuration['zxcvbn_score'])));

@@ -20,6 +20,15 @@ class ZxcvbnSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
+  protected function getEditableConfigNames() {
+    return [
+      'password_policy_zxcvbn.settings',
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = \Drupal::config('password_policy_zxcvbn.settings');
     $form = array();
